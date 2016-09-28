@@ -1,0 +1,16 @@
+
+[all:vars]
+username=ntc
+pwd=ntc123
+
+[iosxr]
+xrv1
+
+[iosxe]
+csr1
+
+[vmx]
+vmx1
+vmx2
+vmx3
+

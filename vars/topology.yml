@@ -1,0 +1,24 @@
+---
+
+desired:
+  vmx1:
+    fxp0:
+      neighbors: ['vmx2', 'vmx3']
+    ge-0/0/0:
+      neighbors: ['vmx3']
+    ge-0/0/2:
+      neighbors: ['vmx2']
+  vmx2:
+    fxp0:
+      neighbors: ['vmx1', 'vmx3']
+    ge-0/0/1:
+      neighbors: ['vmx3']
+    ge-0/0/2:
+      neighbors: ['vmx1']
+  vmx3:
+    fxp0:
+      neighbors: ['vmx1', 'vmx2']
+    ge-0/0/0:
+      neighbors: ['vmx1']
+    ge-0/0/1:
+      neighbors: ['vmx2']

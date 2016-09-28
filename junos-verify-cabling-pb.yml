@@ -1,0 +1,39 @@
+---
+
+  - name: TOPOLOGY AND CABLE VERIFICATION
+    hosts: vmx
+    connection: local
+    gather_facts: no
+
+    vars_files:
+      - vars/topology.yml
+
+    tasks:
+
+      - name: GET REAL-TIME (EXISTING) NEIGHBORS
+        junos_get_table:
+          host: "{{ inventory_hostname }}"
+          user: "{{ un }}"
+          passwd: "{{ pwd }}"
+          table: LLDPNeighborTable
+          file: lldp.yml
+        register: neighbors_list
+
+      - debug: var=neighbors_list verbosity=1
+
+      - name: CONVERT LIST OF DICTS TO DICT (WITH LISTS) AND SET FACT
+        set_fact: existing={{ neighbors_list.resource|list_to_dict('local_int') }}
+
+      - name: REAL-TIME (EXISTING) NEIGHBORS
+        debug: var=existing verbosity=1
+
+      - name: PROPOSED TOPOLOGY (NEIGHBORS)
+        debug: var=desired[inventory_hostname] verbosity=1
+
+      - name: ASSERT THE QUANTITY OF NEIGHBORS ON EACH INTERFACE IS CORRECT AND THE NEIGHBORS FOUNDON EACH IS CORRECT
+        assert:
+          that:
+            - existing[item.key]|length == item.value.neighbors|length
+            - existing[item.key]|map(attribute='remote_sysname')|list|sort == item.value.neighbors|sort
+        with_dict: "{{ desired[inventory_hostname] }}"
+
