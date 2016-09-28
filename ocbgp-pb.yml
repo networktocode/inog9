@@ -11,7 +11,7 @@
         oc_bgp:
           username: "{{ un }}"
           password: "{{ pwd }}"
-          host: "{{ ipaddr }}"
+          host: "{{ inventory_hostname }}"
           asn: 65536
           router_id: 10.1.1.1
           state: present
