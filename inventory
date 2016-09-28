@@ -1,6 +1,6 @@
 
 [all:vars]
-username=ntc
+un=ntc
 pwd=ntc123
 
 [iosxr]

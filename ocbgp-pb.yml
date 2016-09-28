@@ -9,7 +9,7 @@
 
       - name: ENSURE DEVICES HAVE PROPER ASN AND RID
         oc_bgp:
-          username: "{{ username }}"
+          username: "{{ un }}"
           password: "{{ pwd }}"
           host: "{{ ipaddr }}"
           asn: 65536
