@@ -1,13 +1,14 @@
 ---
 
-  - name: oc bgp demo
-    hosts: all
+  - name: OPENCONFIG BGP DEMO AT INOG9
+    hosts: xr
     connection: local
     gather_facts: no
 
     tasks:
 
-      - oc_bgp:
+      - name: ENSURE DEVICES HAVE PROPER ASN AND RID
+        oc_bgp:
           username: "{{ username }}"
           password: "{{ pwd }}"
           host: "{{ ipaddr }}"
