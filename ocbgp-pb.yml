@@ -1,7 +1,7 @@
 ---
 
   - name: OPENCONFIG BGP DEMO AT INOG9
-    hosts: xr
+    hosts: iosxr
     connection: local
     gather_facts: no
 
