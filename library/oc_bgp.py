@@ -20,11 +20,13 @@ DOCUMENTATION = '''
 module: oc_bgp
 short_description: Configure BGP according to the OC-BGP model
 description:
-    - Manages ASN and router ID
+    - Manages ASN and router ID using OpenConfig BGP models
 author: Jason Edelman (@jedelman8)
 requirements:
     - ncclient
 notes:
+    - This was built for demo and prototype purposes.  Needs to be
+      re-factored.
     - When state is set to absent, the existing BGP configuration
       regardless if ASN matches what is in the playbook, will be
       removed from the switch.
@@ -108,9 +110,9 @@ def config_filter(module, delta, existing, state):
 
     asn = delta.get('as') or existing.get('as')
     router_id = delta.get('router_id')
-
+    # TODO: USE etree objects instead of XML strings
+    # and dynamically build objects
     if (asn and router_id) or router_id:
-        # asn = asn or
         nc_filter = """
                         <config>
                          <bgp xmlns="http://openconfig.net/yang/bgp" nc:operation="{0}">
@@ -202,7 +204,8 @@ def main():
         xml_filter = ''
 
         if state == 'present':
-
+            # TODO: fix / update conditional.  Keep for demo/prototype.
+            # TODO: add conditional that will ultimately use nc replace op
             if delta or not existing:
                 if delta.get('as') and delta.get('as') != existing.get('as') and existing.get('as'):
                     module.fail_json(msg='cannot change ASN. Use state=absent to remove first',
