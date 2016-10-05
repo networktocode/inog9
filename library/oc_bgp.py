@@ -207,7 +207,7 @@ def main():
             # TODO: fix / update conditional.  Keep for demo/prototype.
             # TODO: add conditional that will ultimately use nc replace op
             if delta or not existing:
-                if delta.get('as') and delta.get('as') != existing.get('as') and existing.get('as'):
+                if asn != existing.get('as') and existing.get('as'):
                     module.fail_json(msg='cannot change ASN. Use state=absent to remove first',
                                      existing=existing.get('as'), proposed=asn)
                 else:
